@@ -178,7 +178,9 @@ function Resume() {
                 let walletAge = 'No transactions or new wallet';
                 if (txCount > 0) {
                     const earliestSig = txSignatures[txSignatures.length - 1].signature;
-                    const earliestTxn = await connection.getTransaction(earliestSig);
+                    const earliestTxn = await connection.getTransaction(earliestSig, {
+                        maxSupportedTransactionVersion: 0
+                    });
                     if (earliestTxn?.blockTime) {
                         const now = Math.floor(Date.now() / 1000);
                         walletAge = formatWalletAge(now - earliestTxn.blockTime);
